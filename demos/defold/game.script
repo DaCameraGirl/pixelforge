@@ -1,0 +1,56 @@
+-- PixelForge — Defold Demo
+-- Attach this script to a game object in the Defold editor.
+-- It moves a sprite left/right, fires bullets upward, and tracks score.
+-- New Project → empty template → create game object → add Script component → paste this file.
+
+local SPEED      = 200
+local BULLET_SPD = 400
+local SHOOT_CD   = 0.18   -- seconds between shots
+
+local score     = 0
+local shoot_timer = 0
+
+function init(self)
+    msg.post(".", "acquire_input_focus")
+    self.pos = go.get_position()
+    score = 0
+    shoot_timer = 0
+    print("[PixelForge] Defold demo loaded — use LEFT/RIGHT to move, SPACE to shoot")
+end
+
+function update(self, dt)
+    shoot_timer = math.max(0, shoot_timer - dt)
+
+    -- Movement
+    local dx = 0
+    if self.move_left  then dx = dx - SPEED end
+    if self.move_right then dx = dx + SPEED end
+
+    local pos = go.get_position()
+    pos.x = pos.x + dx * dt
+    -- Clamp to screen width (assumes 960px wide project)
+    pos.x = math.max(30, math.min(930, pos.x))
+    go.set_position(pos)
+end
+
+function on_input(self, action_id, action)
+    if action_id == hash("left")  then self.move_left  = not action.released end
+    if action_id == hash("right") then self.move_right = not action.released end
+
+    if action_id == hash("shoot") and action.pressed and shoot_timer == 0 then
+        -- Spawn a bullet factory object (add a factory component named "bullet_factory")
+        local bullet_pos = go.get_position()
+        bullet_pos.y = bullet_pos.y + 30
+        local id = factory.create("#bullet_factory", bullet_pos)
+        go.set_linear_velocity(id, vmath.vector3(0, BULLET_SPD, 0))
+        shoot_timer = SHOOT_CD
+        print("[PixelForge] Bullet fired — score: " .. score)
+    end
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("enemy_hit") then
+        score = score + message.points
+        print("[PixelForge] Hit! Score: " .. score)
+    end
+end

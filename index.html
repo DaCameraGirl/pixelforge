@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixelForge — Game Dev Lab II</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #1a0a2e;
+    --bg2:     #120820;
+    --card:    #1e0f35;
+    --purple:  #bf5fff;
+    --orange:  #ff6b35;
+    --pink:    #ff3d9a;
+    --lime:    #a8ff3e;
+    --blue:    #3d9aff;
+    --dim:     #5a4870;
+    --text:    #d4c8e8;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='4' fill='%23bf5fff'/%3E%3C/svg%3E") 10 10, crosshair;
+  }
+
+  body::after {
+    content:'';
+    position:fixed; inset:0;
+    background: repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);
+    pointer-events:none; z-index:9999;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    padding: 1rem 2rem;
+    display:flex; align-items:center; justify-content:space-between;
+    background: rgba(18,8,32,0.9);
+    border-bottom: 2px solid var(--purple);
+    box-shadow: 0 0 30px rgba(191,95,255,0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
+    color: var(--purple);
+    text-shadow: 0 0 10px var(--purple);
+  }
+
+  .nav-logo span { color: var(--orange); }
+
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--dim);
+    text-decoration:none;
+    letter-spacing:0.1em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--purple); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+    padding-top: 80px;
+  }
+
+  #pixel-canvas {
+    position:absolute; inset:0; width:100%; height:100%;
+  }
+
+  .hero-content { position:relative; z-index:2; text-align:center; }
+
+  .pixel-tag {
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    color: var(--orange);
+    letter-spacing: 0.3em;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.6rem, 4vw, 3.2rem);
+    line-height: 1.4;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  h1 .l1 { color: #fff; display:block; }
+  h1 .l2 {
+    display:block;
+    background: linear-gradient(90deg, var(--purple), var(--pink));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+
+  .hero-sub {
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    color: var(--dim);
+    margin-top: 1.2rem;
+    letter-spacing: 0.15em;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .cta-row {
+    display:flex; gap:1rem; justify-content:center;
+    margin-top: 2rem;
+    animation: fadeUp 0.6s 0.45s ease both;
+  }
+
+  .btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    padding: 0.9rem 1.6rem;
+    border: 2px solid;
+    background:transparent; cursor:pointer;
+    text-decoration:none; display:inline-block;
+    transition: all 0.15s;
+    letter-spacing:0.05em;
+  }
+
+  .btn-purple { border-color:var(--purple); color:var(--purple); }
+  .btn-purple:hover { background:var(--purple); color:var(--bg); box-shadow:0 0 20px var(--purple); }
+  .btn-orange { border-color:var(--orange); color:var(--orange); }
+  .btn-orange:hover { background:var(--orange); color:var(--bg); box-shadow:0 0 20px var(--orange); }
+
+  /* SECTIONS */
+  .section { max-width:1200px; margin:0 auto; padding:6rem 2rem; }
+
+  .s-tag {
+    font-family:'Press Start 2P',monospace;
+    font-size:0.5rem;
+    color:var(--orange);
+    letter-spacing:0.3em;
+    margin-bottom:0.6rem;
+  }
+
+  .s-title {
+    font-family:'Press Start 2P',monospace;
+    font-size:clamp(1rem,2.5vw,1.8rem);
+    color:#fff; line-height:1.5;
+    margin-bottom:0.8rem;
+  }
+
+  .s-desc {
+    font-size:0.85rem;
+    color:var(--dim);
+    max-width:580px;
+    line-height:1.9;
+    margin-bottom:3rem;
+  }
+
+  /* ENGINE GRID */
+  .engine-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:1.5rem;
+  }
+
+  .ecard {
+    background:var(--card);
+    border:2px solid rgba(191,95,255,0.15);
+    padding:1.8rem;
+    position:relative; overflow:hidden;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor:pointer;
+  }
+
+  .ecard::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:3px;
+    background:var(--ac);
+    box-shadow:0 0 15px var(--ac);
+    opacity:0; transition:opacity 0.3s;
+  }
+
+  .ecard:hover { transform:translateY(-5px); border-color:var(--ac); }
+  .ecard:hover::before { opacity:1; }
+
+  .ecard-icon { font-size:2.2rem; margin-bottom:0.8rem; display:block; }
+
+  .ecard-name {
+    font-family:'Press Start 2P',monospace;
+    font-size:0.75rem;
+    color:#fff; margin-bottom:0.5rem;
+    line-height:1.6;
+  }
+
+  .ecard-desc {
+    font-size:0.78rem;
+    color:var(--dim);
+    line-height:1.7;
+    margin-bottom:1.2rem;
+  }
+
+  .badges { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+
+  .badge {
+    font-family:'Space Mono',monospace;
+    font-size:0.55rem;
+    padding:0.2rem 0.5rem;
+    border:1px solid;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+
+  .bl { border-color:var(--ac); color:var(--ac); }
+  .be { border-color:var(--lime); color:var(--lime); }
+  .bm { border-color:var(--orange); color:var(--orange); }
+
+  .ecard-btn {
+    font-family:'Press Start 2P',monospace;
+    font-size:0.5rem;
+    padding:0.6rem 1rem;
+    border:2px solid var(--ac);
+    color:var(--ac); background:transparent;
+    cursor:pointer; width:100%;
+    transition:all 0.15s; letter-spacing:0.05em;
+  }
+
+  .ecard-btn:hover { background:var(--ac); color:var(--bg); }
+
+  .card-purple  { --ac: #bf5fff; }
+  .card-orange  { --ac: #ff6b35; }
+  .card-lime    { --ac: #a8ff3e; }
+  .card-blue    { --ac: #3d9aff; }
+
+  /* GAME AREA */
+  #arcade { max-width:1200px; margin:0 auto; padding:6rem 2rem; }
+
+  .arcade-wrap {
+    display:grid;
+    grid-template-columns:1fr 300px;
+    gap:2rem; align-items:start;
+  }
+
+  @media(max-width:860px) { .arcade-wrap { grid-template-columns:1fr; } }
+
+  .cabinet {
+    border:3px solid var(--purple);
+    box-shadow:0 0 30px rgba(191,95,255,0.3), inset 0 0 30px rgba(191,95,255,0.05);
+    background:#000;
+  }
+
+  .cab-head {
+    background: var(--bg2);
+    padding:0.6rem 1.2rem;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:2px solid rgba(191,95,255,0.3);
+  }
+
+  .cab-title {
+    font-family:'Press Start 2P',monospace;
+    font-size:0.6rem; color:var(--purple);
+  }
+
+  .cab-live {
+    font-family:'Space Mono',monospace;
+    font-size:0.6rem; color:var(--lime);
+  }
+
+  .cab-live::before { content:'● '; animation:blink 1s step-end infinite; }
+
+  #game-canvas { display:block; width:100%; background:#000; }
+
+  .cab-foot {
+    background:var(--bg2);
+    padding:0.5rem 1.2rem;
+    display:flex; gap:1.5rem; flex-wrap:wrap;
+    border-top:2px solid rgba(191,95,255,0.3);
+  }
+
+  .ctrl {
+    font-family:'Space Mono',monospace;
+    font-size:0.55rem; color:var(--dim);
+  }
+  .ctrl span {
+    color:var(--purple);
+    border:1px solid rgba(191,95,255,0.5);
+    padding:0 0.3rem;
+  }
+
+  /* SIDEBAR */
+  .sidebar { display:flex; flex-direction:column; gap:1.2rem; }
+
+  .stat {
+    background:var(--card);
+    border:1px solid rgba(191,95,255,0.2);
+    padding:1.2rem;
+  }
+
+  .stat-lbl {
+    font-family:'Press Start 2P',monospace;
+    font-size:0.45rem; color:var(--dim);
+    letter-spacing:0.2em; margin-bottom:0.5rem;
+  }
+
+  .stat-val {
+    font-family:'Press Start 2P',monospace;
+    font-size:1.6rem; color:var(--purple); line-height:1;
+  }
+
+  .stat-val.s-lives { color:var(--pink); }
+  .stat-val.s-wave  { color:var(--lime); }
+
+  /* DIVIDER */
+  .divider {
+    width:100%; height:2px;
+    background:linear-gradient(90deg,transparent,var(--purple),var(--pink),transparent);
+    opacity:0.3;
+  }
+
+  /* MODAL */
+  .moverlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,0.85);
+    z-index:200; align-items:center; justify-content:center;
+    backdrop-filter:blur(4px);
+  }
+  .moverlay.open { display:flex; }
+
+  .mbox {
+    background:var(--card);
+    border:2px solid var(--purple);
+    box-shadow:0 0 40px rgba(191,95,255,0.25);
+    padding:2rem; max-width:460px; width:90%;
+    position:relative;
+  }
+
+  .mclose {
+    position:absolute; top:0.8rem; right:0.8rem;
+    background:none; border:none; color:var(--dim);
+    font-size:1.2rem; cursor:pointer; font-family:'Space Mono',monospace;
+  }
+  .mclose:hover { color:#fff; }
+
+  .mname {
+    font-family:'Press Start 2P',monospace;
+    font-size:0.9rem; color:#fff;
+    line-height:1.5; margin-bottom:1rem;
+  }
+
+  .mstep {
+    background:rgba(0,0,0,0.4);
+    border-left:3px solid var(--purple);
+    padding:0.7rem 0.9rem;
+    margin:0.6rem 0;
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem; color:var(--text); line-height:1.6;
+  }
+
+  .mstep strong { color:var(--purple); display:block; margin-bottom:0.2rem; font-size:0.65rem; }
+
+  .mlink {
+    display:block; text-align:center; margin-top:1.2rem;
+    font-family:'Space Mono',monospace; font-size:0.7rem;
+    color:var(--purple); border:2px solid var(--purple);
+    padding:0.6rem; text-decoration:none; transition:all 0.15s;
+  }
+  .mlink:hover { background:var(--purple); color:var(--bg); }
+
+  /* TERMINAL */
+  #setup { max-width:1200px; margin:0 auto; padding:6rem 2rem; }
+
+  .term {
+    background:#000;
+    border:2px solid rgba(168,255,62,0.4);
+    box-shadow:0 0 20px rgba(168,255,62,0.15);
+  }
+
+  .tbar {
+    background:#0d0d0d;
+    padding:0.5rem 1rem;
+    display:flex; align-items:center; gap:0.5rem;
+    border-bottom:1px solid rgba(168,255,62,0.2);
+  }
+
+  .td { width:10px; height:10px; border-radius:50%; }
+  .td.r { background:#ff5f56; }
+  .td.y { background:#ffbd2e; }
+  .td.g { background:#27c93f; }
+
+  .tbody {
+    padding:1.2rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.75rem; line-height:1.9;
+    color:var(--lime);
+  }
+
+  .tp { color:var(--dim); }
+  .tc { color:var(--blue); }
+  .to { color:#444; }
+  .tcur {
+    display:inline-block; width:8px; height:1em;
+    background:var(--lime); vertical-align:text-bottom;
+    animation:blink 1s step-end infinite;
+  }
+
+  footer {
+    border-top:2px solid rgba(191,95,255,0.2);
+    padding:2rem; text-align:center;
+    font-family:'Space Mono',monospace;
+    font-size:0.65rem; color:var(--dim);
+  }
+  footer span { color:var(--pink); }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">PIXEL<span>FORGE</span></div>
+  <ul class="nav-links">
+    <li><a href="#engines">Engines</a></li>
+    <li><a href="#arcade">Arcade</a></li>
+    <li><a href="#setup">Setup</a></li>
+  </ul>
+</nav>
+
+<div id="hero">
+  <canvas id="pixel-canvas"></canvas>
+  <div class="hero-content">
+    <div class="pixel-tag">// GAME DEV LAB  II //</div>
+    <h1>
+      <span class="l1">PIXEL</span>
+      <span class="l2">FORGE</span>
+    </h1>
+    <p class="hero-sub">Pygame · Defold · Love2D · MonoGame</p>
+    <div class="cta-row">
+      <a href="#engines" class="btn btn-purple">Engines</a>
+      <a href="#arcade" class="btn btn-orange">Play</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="engines">
+  <div class="s-tag">// 01 — STACK</div>
+  <h2 class="s-title">The Next Four</h2>
+  <p class="s-desc">Pygame, Defold, Love2D, and MonoGame. Four more engines. Four more resume lines.</p>
+
+  <div class="engine-grid">
+    <div class="ecard card-purple" onclick="openModal('pygame')">
+      <span class="ecard-icon">🐍</span>
+      <div class="ecard-name">Pygame</div>
+      <p class="ecard-desc">Python game library. Sprites, sound, physics — all in Python you already know. Closest thing to "game dev with no new language."</p>
+      <div class="badges">
+        <span class="badge bl">Python</span>
+        <span class="badge be">Easy</span>
+      </div>
+      <button class="ecard-btn">View Guide →</button>
+    </div>
+
+    <div class="ecard card-orange" onclick="openModal('defold')">
+      <span class="ecard-icon">🔷</span>
+      <div class="ecard-name">Defold</div>
+      <p class="ecard-desc">Free, lightweight 2D engine from King (Candy Crush studio). Uses Lua. Same bracket as Solar2D — one Lua skill covers both.</p>
+      <div class="badges">
+        <span class="badge bl">Lua</span>
+        <span class="badge bm">Medium</span>
+      </div>
+      <button class="ecard-btn">View Guide →</button>
+    </div>
+
+    <div class="ecard card-lime" onclick="openModal('love2d')">
+      <span class="ecard-icon">💚</span>
+      <div class="ecard-name">Love2D</div>
+      <p class="ecard-desc">Minimal Lua framework beloved by indie devs. No editor — pure code. A small platformer or shooter covers the Cocos2d-x bracket.</p>
+      <div class="badges">
+        <span class="badge bl">Lua</span>
+        <span class="badge be">Easy</span>
+      </div>
+      <button class="ecard-btn">View Guide →</button>
+    </div>
+
+    <div class="ecard card-blue" onclick="openModal('monogame')">
+      <span class="ecard-icon">🎯</span>
+      <div class="ecard-name">MonoGame</div>
+      <p class="ecard-desc">The engine behind Stardew Valley and Celeste. C# / .NET — pairs with your Stride work. A sprite renderer covers the bracket.</p>
+      <div class="badges">
+        <span class="badge bl">C#</span>
+        <span class="badge bm">Medium</span>
+      </div>
+      <button class="ecard-btn">View Guide →</button>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div id="arcade">
+  <div class="s-tag">// 02 — LIVE DEMO</div>
+  <h2 class="s-title">Neon Maze</h2>
+  <p class="s-desc" style="margin-bottom:2rem">A playable maze game built with pure JS Canvas — the same render loop pattern used in Pygame, Love2D, and MonoGame.</p>
+
+  <div class="arcade-wrap">
+    <div class="cabinet">
+      <div class="cab-head">
+        <span class="cab-title">NEON MAZE v1.0</span>
+        <span class="cab-live">LIVE</span>
+      </div>
+      <canvas id="game-canvas" width="600" height="450"></canvas>
+      <div class="cab-foot">
+        <span class="ctrl"><span>↑↓←→</span> MOVE</span>
+        <span class="ctrl"><span>R</span> RESTART</span>
+        <span class="ctrl"><span>CLICK</span> START</span>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="stat">
+        <div class="stat-lbl">Level</div>
+        <div class="stat-val s-wave" id="ui-level">1</div>
+      </div>
+      <div class="stat">
+        <div class="stat-lbl">Time</div>
+        <div class="stat-val" id="ui-time">0.0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-lbl">Best</div>
+        <div class="stat-val s-lives" id="ui-best">--</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div id="setup">
+  <div class="s-tag">// 03 — QUICKSTART</div>
+  <h2 class="s-title">Get Running</h2>
+  <p class="s-desc" style="margin-bottom:2rem">Pygame installs in seconds. Love2D is a single executable. Start there.</p>
+
+  <div class="term">
+    <div class="tbar">
+      <div class="td r"></div><div class="td y"></div><div class="td g"></div>
+    </div>
+    <div class="tbody">
+      <div><span class="tp">~/PixelForge $ </span><span class="tc">pip install pygame-ce</span></div>
+      <div class="to">Successfully installed pygame-ce-2.x</div>
+      <br>
+      <div><span class="tp">~/PixelForge $ </span><span class="tc">python demos/pygame/asteroid_field.py</span></div>
+      <div class="to" style="color:#a8ff3e">★ Pygame window opened — asteroid field running</div>
+      <br>
+      <div><span class="tp">~/PixelForge $ </span><span class="tc">love demos/love2d/</span></div>
+      <div class="to" style="color:#a8ff3e">★ Love2D window opened — neon breakout running</div>
+      <br>
+      <div><span class="tp">~/PixelForge $ </span><span class="tc">python launcher.py</span></div>
+      <div class="to" style="color:#a8ff3e">★ PixelForge launcher started</div>
+      <br>
+      <div><span class="tp">~/PixelForge $ </span><span class="tcur"></span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>PIXELFORGE &nbsp;·&nbsp; Built by <span>Angela Hudson</span> &nbsp;·&nbsp; 2026</p>
+  <p style="margin-top:0.4rem;font-size:0.55rem">Pygame · Defold · Love2D · MonoGame</p>
+</footer>
+
+<!-- MODAL -->
+<div class="moverlay" id="moverlay" onclick="closeMod(event)">
+  <div class="mbox" id="mbox">
+    <button class="mclose" onclick="closeDirect()">✕</button>
+    <div id="mcontent"></div>
+  </div>
+</div>
+
+<script>
+// ── HERO PIXEL RAIN ──
+(function(){
+  const c=document.getElementById('pixel-canvas'),x=c.getContext('2d');
+  let W,H,cols,drops=[];
+  const chars='PIXELFORGE01アイウエオカキク';
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;cols=Math.floor(W/18);drops=Array(cols).fill(0).map(()=>Math.random()*-50);}
+  resize();window.addEventListener('resize',resize);
+  function loop(){
+    x.fillStyle='rgba(26,10,46,0.12)';x.fillRect(0,0,W,H);
+    x.font='14px "Space Mono"';
+    drops.forEach((y,i)=>{
+      const t=chars[Math.floor(Math.random()*chars.length)];
+      const prog=y/(H/18);
+      if(prog>0.85){x.fillStyle=`rgba(255,255,255,${1-((prog-0.85)/0.15)})`;}
+      else{const b=Math.floor(prog*200);x.fillStyle=`rgb(${80+b},${20+b/3},${200+b/4})`;}
+      x.fillText(t,i*18,y*18);
+      if(y*18>H&&Math.random()>0.97)drops[i]=0;else drops[i]+=0.3+Math.random()*0.2;
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// ── NEON MAZE GAME ──
+(function(){
+  const canvas=document.getElementById('game-canvas');
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  const uiLevel=document.getElementById('ui-level');
+  const uiTime=document.getElementById('ui-time');
+  const uiBest=document.getElementById('ui-best');
+
+  const CELL=30,COLS=Math.floor(W/CELL),ROWS=Math.floor(H/CELL);
+  const PURPLE='#bf5fff',ORANGE='#ff6b35',LIME='#a8ff3e',PINK='#ff3d9a',BG='#1a0a2e';
+
+  let state='start',maze=[],player={},goal={},level=1,startTime=0,elapsed=0,best={},animT=0;
+
+  // Maze generator — recursive backtracker
+  function genMaze(cols,rows){
+    const g=Array.from({length:rows},(_,r)=>Array.from({length:cols},(_,c)=>({r,c,visited:false,walls:{N:true,S:true,E:true,W:true}})));
+    const stack=[];
+    const start=g[0][0];start.visited=true;stack.push(start);
+    while(stack.length){
+      const cur=stack[stack.length-1];
+      const nb=[];
+      const dirs=[['N',-1,0],['S',1,0],['E',0,1],['W',0,-1]];
+      dirs.forEach(([d,dr,dc])=>{
+        const nr=cur.r+dr,nc=cur.c+dc;
+        if(nr>=0&&nr<rows&&nc>=0&&nc<cols&&!g[nr][nc].visited)nb.push([d,g[nr][nc]]);
+      });
+      if(nb.length){
+        const[dir,next]=nb[Math.floor(Math.random()*nb.length)];
+        const opp={N:'S',S:'N',E:'W',W:'E'};
+        cur.walls[dir]=false;next.walls[opp[dir]]=false;
+        next.visited=true;stack.push(next);
+      }else stack.pop();
+    }
+    return g;
+  }
+
+  function startLevel(){
+    maze=genMaze(COLS,ROWS);
+    player={r:0,c:0};
+    goal={r:ROWS-1,c:COLS-1};
+    startTime=performance.now();
+    state='playing';
+  }
+
+  function resetGame(){level=1;startLevel();}
+
+  const keyQ=new Set();
+  window.addEventListener('keydown',e=>{
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();
+    if(e.code==='KeyR'){resetGame();return;}
+    if(state==='start'||state==='win'){if(state==='win'&&level>0){}; resetGame();return;}
+    if(state!=='playing')return;
+    const{r,c}=player;
+    const cell=maze[r][c];
+    if(e.code==='ArrowUp'&&!cell.walls.N)player.r--;
+    if(e.code==='ArrowDown'&&!cell.walls.S)player.r++;
+    if(e.code==='ArrowLeft'&&!cell.walls.W)player.c--;
+    if(e.code==='ArrowRight'&&!cell.walls.E)player.c++;
+    if(player.r===goal.r&&player.c===goal.c){
+      const t=((performance.now()-startTime)/1000).toFixed(1);
+      elapsed=parseFloat(t);
+      if(!best[level]||elapsed<best[level])best[level]=elapsed;
+      state='win';
+    }
+    updateHUD();
+  });
+
+  canvas.addEventListener('click',()=>{if(state==='start'||state==='win')resetGame();});
+
+  function updateHUD(){
+    uiLevel.textContent=level;
+    if(state==='playing')uiTime.textContent=((performance.now()-startTime)/1000).toFixed(1);
+    const b=best[level];uiBest.textContent=b?b+'s':'--';
+  }
+
+  function drawMaze(){
+    ctx.strokeStyle=PURPLE;ctx.lineWidth=2;
+    ctx.shadowColor=PURPLE;ctx.shadowBlur=6;
+    for(let r=0;r<ROWS;r++){
+      for(let c=0;c<COLS;c++){
+        const cell=maze[r][c];
+        const x=c*CELL,y=r*CELL;
+        ctx.beginPath();
+        if(cell.walls.N){ctx.moveTo(x,y);ctx.lineTo(x+CELL,y);}
+        if(cell.walls.S){ctx.moveTo(x,y+CELL);ctx.lineTo(x+CELL,y+CELL);}
+        if(cell.walls.W){ctx.moveTo(x,y);ctx.lineTo(x,y+CELL);}
+        if(cell.walls.E){ctx.moveTo(x+CELL,y);ctx.lineTo(x+CELL,y+CELL);}
+        ctx.stroke();
+      }
+    }
+    ctx.shadowBlur=0;
+  }
+
+  function drawCell(r,c,color,size=0.6){
+    const pad=CELL*(1-size)/2;
+    ctx.fillStyle=color;ctx.shadowColor=color;ctx.shadowBlur=12;
+    ctx.fillRect(c*CELL+pad,r*CELL+pad,CELL*size,CELL*size);
+    ctx.shadowBlur=0;
+  }
+
+  function drawText(txt,x,y,font,color,glow){
+    ctx.save();ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=color;if(glow){ctx.shadowColor=color;ctx.shadowBlur=16;}
+    ctx.fillText(txt,x,y);ctx.restore();
+  }
+
+  function loop(ts){
+    animT=ts/1000;
+    ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+
+    if(state==='start'){
+      drawText('NEON MAZE',W/2,H/2-40,"bold 28px 'Press Start 2P'",PURPLE,true);
+      drawText('CLICK OR PRESS ANY ARROW TO START',W/2,H/2+20,"12px 'Space Mono'",ORANGE,false);
+      requestAnimationFrame(loop);return;
+    }
+
+    drawMaze();
+
+    // goal pulse
+    const pulse=0.55+Math.sin(animT*4)*0.1;
+    drawCell(goal.r,goal.c,LIME,pulse);
+
+    // player
+    drawCell(player.r,player.c,PINK,0.55);
+
+    if(state==='playing')updateHUD();
+
+    if(state==='win'){
+      ctx.fillStyle='rgba(26,10,46,0.75)';ctx.fillRect(0,0,W,H);
+      drawText('LEVEL CLEAR!',W/2,H/2-50,"bold 22px 'Press Start 2P'",LIME,true);
+      drawText(`TIME: ${elapsed}s`,W/2,H/2,  "14px 'Space Mono'",ORANGE,false);
+      drawText('PRESS ANY KEY / CLICK',W/2,H/2+44,"10px 'Space Mono'",PURPLE,false);
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  resetGame();
+  requestAnimationFrame(loop);
+})();
+
+// ── MODALS ──
+const MDATA={
+  pygame:{name:'Pygame',steps:[
+    {t:'Install',b:'pip install pygame-ce  (Community Edition — actively maintained fork of Pygame)'},
+    {t:'First Window',b:'pygame.init() → display.set_mode() → event loop. A moving sprite with keyboard controls is 40 lines of Python.'},
+    {t:'This Demo',b:'asteroid_field.py in demos/pygame/ — asteroids, player ship, bullets, score. Run it with python asteroid_field.py.'},
+    {t:'Resume Line',b:'"Built a 2D space shooter in Pygame; implemented sprite collision, sound effects, and a score system." — covers 0–1 years.'},
+  ],link:'https://pyga.me'},
+  defold:{name:'Defold',steps:[
+    {t:'Install',b:'Download Defold Editor from defold.com — free, no license fee, used in production by King and Zynga.'},
+    {t:'First Project',b:'New Project → empty template. Defold uses Lua + a visual editor. Script components attach to game objects exactly like Unity.'},
+    {t:'Key Concept',b:'Lua is the same language as Solar2D — if you built the Solar2D runner first, Defold will feel immediately familiar.'},
+    {t:'Resume Line',b:'"Built a 2D puzzle game in Defold using Lua; used the visual scene editor and script components." — covers 0–1 years.'},
+  ],link:'https://defold.com'},
+  love2d:{name:'Love2D',steps:[
+    {t:'Install',b:'Download Love2D from love2d.org — single executable, no installer. Run: love path/to/folder.'},
+    {t:'First Game',b:'conf.lua + main.lua. love.update(dt), love.draw(), love.keypressed(k). No editor — pure code, immediate results.'},
+    {t:'This Demo',b:'demos/love2d/ contains a neon breakout game. Run: love demos/love2d/ from this folder.'},
+    {t:'Resume Line',b:'"Built a 2D breakout game in Love2D (Lua); implemented physics-based ball movement and procedural level gen." — covers 0–1 years.'},
+  ],link:'https://love2d.org'},
+  monogame:{name:'MonoGame',steps:[
+    {t:'Install',b:'Install .NET 8 SDK then: dotnet new --install MonoGame.Templates.CSharp. Same C# as Stride — they complement each other.'},
+    {t:'First Project',b:'dotnet new mgdesktopgl -n MyGame. MonoGame gives you Update() and Draw() loops — almost identical to XNA if you know it.'},
+    {t:'Key Fact',b:'Stardew Valley, Celeste, and Axiom Verge were all built on MonoGame. Serious resume credibility.'},
+    {t:'Resume Line',b:'"Built a 2D sprite-based game in MonoGame (C#); implemented animated sprites, tilemap rendering, and player movement." — covers 0–1 years.'},
+  ],link:'https://monogame.net'},
+};
+
+function openModal(k){
+  const d=MDATA[k];
+  document.getElementById('mcontent').innerHTML=`
+    <div class="mname">${d.name}</div>
+    ${d.steps.map(s=>`<div class="mstep"><strong>${s.t}</strong>${s.b}</div>`).join('')}
+    <a class="mlink" href="${d.link}" target="_blank" rel="noopener">→ Official Site</a>`;
+  document.getElementById('moverlay').classList.add('open');
+}
+function closeMod(e){if(e.target===document.getElementById('moverlay'))closeDirect();}
+function closeDirect(){document.getElementById('moverlay').classList.remove('open');}
+</script>
+</body>
+</html>
