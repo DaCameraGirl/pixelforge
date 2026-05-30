@@ -219,10 +219,10 @@ class MazeGame {
       mouth: 0,
     };
     this.ghosts = [
-      this.makeGhost(12, 8, colors.pink, 0, "Chaser"),
-      this.makeGhost(11, 8, colors.cyan, 1, "Ambusher"),
-      this.makeGhost(13, 8, colors.violet, 2, "Patroller"),
-      this.makeGhost(12, 9, colors.red, 3, "Drifter"),
+      this.makeGhost(12, 8, colors.pink, 0, "Chaser", 0.4),
+      this.makeGhost(11, 8, colors.cyan, 1, "Ambusher", 1.7),
+      this.makeGhost(13, 8, colors.violet, 2, "Patroller", 3.0),
+      this.makeGhost(14, 8, colors.red, 3, "Drifter", 4.3),
     ];
     this.fright = 0;
     this.frightChain = 0;
@@ -236,7 +236,7 @@ class MazeGame {
     this.fruitMessage = null;
   }
 
-  makeGhost(c, r, color, brain, name) {
+  makeGhost(c, r, color, brain, name, releaseDelay) {
     return {
       c,
       r,
@@ -250,6 +250,8 @@ class MazeGame {
       name,
       radius: 9,
       respawn: 0,
+      releaseDelay,
+      inHouse: true,
     };
   }
 
@@ -393,6 +395,8 @@ class MazeGame {
       ghost.respawn -= dt;
       return;
     }
+    ghost.releaseDelay = Math.max(0, ghost.releaseDelay - dt);
+    if (ghost.releaseDelay > 0) return;
     if (this.atCenter(ghost)) {
       ghost.x = this.cellToX(ghost.c);
       ghost.y = this.cellToY(ghost.r);
@@ -401,7 +405,11 @@ class MazeGame {
         { x: -1, y: 0 },
         { x: 0, y: 1 },
         { x: 0, y: -1 },
-      ].filter((dir) => this.canMove(ghost.c, ghost.r, dir) && !(dir.x === -ghost.dir.x && dir.y === -ghost.dir.y));
+      ].filter((dir) => {
+        const canMove = this.canMove(ghost.c, ghost.r, dir);
+        const reversing = dir.x === -ghost.dir.x && dir.y === -ghost.dir.y;
+        return canMove && (ghost.inHouse || !reversing);
+      });
 
       if (choices.length) {
         const target = this.ghostTarget(ghost);
@@ -415,7 +423,7 @@ class MazeGame {
           return ad - bd;
         });
         const jitterRate = this.fright > 0 ? 0.62 : ghost.brain === 3 ? 0.28 : 0.12;
-        const jitter = Math.random() < jitterRate ? Math.floor(Math.random() * choices.length) : 0;
+        const jitter = !ghost.inHouse && Math.random() < jitterRate ? Math.floor(Math.random() * choices.length) : 0;
         ghost.dir = choices[jitter];
       }
     }
@@ -428,9 +436,15 @@ class MazeGame {
       ghost.c = current.c;
       ghost.r = current.r;
     }
+    if (ghost.inHouse && ghost.r <= 7) {
+      ghost.inHouse = false;
+      ghost.dir = { x: ghost.brain % 2 === 0 ? -1 : 1, y: 0 };
+    }
   }
 
   ghostTarget(ghost) {
+    if (ghost.releaseDelay > 0) return { c: ghost.home.c, r: ghost.home.r };
+    if (ghost.inHouse) return { c: 12, r: 7 };
     if (this.fright > 0) return { c: this.cols - 1 - this.player.c, r: this.rows - 1 - this.player.r };
     if (this.scatter) return this.scatterTargets[ghost.brain];
     if (ghost.brain === 0) return { c: this.player.c, r: this.player.r };
@@ -512,6 +526,8 @@ class MazeGame {
         ghost.x = this.cellToX(ghost.c);
         ghost.y = this.cellToY(ghost.r);
         ghost.respawn = 2;
+        ghost.releaseDelay = 1.2;
+        ghost.inHouse = true;
         return;
       }
       this.lives -= 1;
@@ -532,6 +548,8 @@ class MazeGame {
           g.r = g.home.r;
           g.x = this.cellToX(g.c);
           g.y = this.cellToY(g.r);
+          g.releaseDelay = 1 + g.brain * 1.1;
+          g.inHouse = true;
         });
         this.status = "Playing";
       }
