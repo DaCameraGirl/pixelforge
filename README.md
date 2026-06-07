@@ -1,6 +1,6 @@
 # PixelForge
 
-A multi-engine game dev portfolio - Part II. Four more engines, four more languages, four more resume lines.
+A multi-engine game dev portfolio - Part II. Five browser arcade games plus four companion engine game demos.
 
 **Live site:** https://dacameragirl.github.io/pixelforge/
 
@@ -81,14 +81,14 @@ dotnet run
 python launcher.py
 ```
 
-## Engine Coverage
+## Engine Game Demos
 
-| Engine | Language | Bracket on Form |
+| Engine | Language | Game Demo |
 |---|---|---|
-| Pygame | Python | MonoGame / Pygame |
-| Love2D | Lua | Cocos2d-x / Love2D / Gideros |
-| Defold | Lua | Cocos2d-x / Love2D / Gideros |
-| MonoGame | C# | MonoGame / Pygame |
+| Pygame | Python | Asteroid Field |
+| Love2D | Lua | Neon Breakout |
+| Defold | Lua | Shooter Script |
+| MonoGame | C# | Space Shooter |
 
 ## See Also
 
