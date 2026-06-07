@@ -1,97 +1,136 @@
-# PixelForge
+# 🎮✨ PixelForge
 
-A multi-engine game dev portfolio - Part II. Five browser arcade games plus four companion engine game demos.
+**PixelForge** is a colorful multi-engine game lab with **five playable browser arcade games** plus **four companion engine demos** built with **Pygame, Love2D, Defold, and MonoGame**.
 
-**Live site:** https://dacameragirl.github.io/pixelforge/
+🌐 **Play it live:** https://dacameragirl.github.io/pixelforge/
 
-## What's Inside
+![HTML](https://img.shields.io/badge/HTML-Arcade%20Shell-ff6b6b?style=for-the-badge)
+![CSS](https://img.shields.io/badge/CSS-Neon%20Cabinet-38dff0?style=for-the-badge)
+![JavaScript](https://img.shields.io/badge/JavaScript-Canvas%20Games-f7df1e?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-Pygame%20%2B%20Launcher-3776ab?style=for-the-badge)
+![Lua](https://img.shields.io/badge/Lua-Love2D%20%2B%20Defold-2c2d72?style=for-the-badge)
+![CSharp](https://img.shields.io/badge/C%23-MonoGame-9b7cff?style=for-the-badge)
 
-### Playable Web Arcade
+## 🕹️ What You Can Play
 
-`index.html` opens in any browser. It includes a five-game JavaScript Canvas cabinet:
+### 🌈 Browser Arcade Cabinet
 
-- **Neon Chomp** - an original maze-chase score attack inspired by classic pellet maze games
-- **Asteroid Forge** - a vector asteroid shooter with thrust, bullets, waves, lives, and splitting rocks
-- **Barrel Tower** - climb ladders, jump rolling hazards, and reach the top exit
-- **Bug Spiral** - clear a segmented insect swarm before it drops into your cannon lane
-- **Tunnel Miner** - dig paths, collect gems, and stun underground enemies
+The live GitHub Pages site runs in the browser with **JavaScript Canvas**, keyboard input, mouse/touch support, scoring, waves, lives, and restart controls.
 
-Controls:
+**Included arcade games:**
 
-- Arrow keys or WASD to move / steer
-- Space to start or shoot
-- Mouse/touch works in the browser cabinet
-- R to restart
-- Click the canvas or Start Game button to play
+- 🟡 **Neon Chomp** — maze chase score attack with pellets, power lanes, and hunters
+- ☄️ **Asteroid Forge** — vector asteroid shooter with thrust, bullets, waves, and splitting rocks
+- 🛢️ **Barrel Tower** — ladder climbing, jumps, rolling hazards, and a top exit goal
+- 🐛 **Bug Spiral** — segmented swarm shooter before the swarm reaches the cannon lane
+- ⛏️ **Tunnel Miner** — dig tunnels, collect gems, stun enemies, and clear the underground round
 
-The web arcade counts normally in GitHub's language breakdown alongside the engine demo languages.
+### 🚀 Companion Engine Games
 
-### Pygame Demo - Python
+These demos show the same arcade/game-loop ideas across different engines and languages.
 
-`demos/pygame/asteroid_field.py`
+| Engine | Language | Game Demo | File |
+| --- | --- | --- | --- |
+| 🐍 **Pygame** | **Python** | **Asteroid Field** | `demos/pygame/asteroid_field.py` |
+| 🌙 **Love2D** | **Lua** | **Neon Breakout** | `demos/love2d/main.lua` |
+| 🧩 **Defold** | **Lua** | **Shooter Script** | `demos/defold/game.script` |
+| 💠 **MonoGame** | **C# / .NET** | **Space Shooter** | `demos/monogame/Game1.cs` |
 
-- Asteroid shooter with waves, rotation, bullets, lives, and score
-- Procedural asteroid splitting - big ones break into smaller ones
-- **Language:** Python
+## 🧪 Languages Used
+
+| Language | Where | What It Does |
+| --- | --- | --- |
+| 🌐 **HTML** | `index.html` | Page structure, arcade sections, engine demo cards |
+| 🎨 **CSS** | `styles.css` | Neon arcade styling, layout, responsive panels, visual polish |
+| 🟨 **JavaScript** | `app.js` | Browser game loops, Canvas rendering, input, collision, scoring |
+| 🐍 **Python** | `launcher.py`, `demos/pygame/` | Desktop launcher and Pygame asteroid shooter |
+| 🌙 **Lua** | `demos/love2d/`, `demos/defold/` | Love2D breakout game and Defold shooter script |
+| 💠 **C#** | `demos/monogame/` | MonoGame space shooter loop and procedural drawing |
+| 📝 **Markdown** | `README.md` | Project documentation |
+
+## 🎛️ Controls
+
+### Browser Arcade
+
+- ⌨️ **Arrow keys / WASD:** move or steer
+- 🔫 **Space:** start, shoot, or trigger the active game action
+- 🖱️ **Mouse / touch:** supported in the browser cabinet
+- 🔁 **R:** restart
+- ▶️ **Start Game:** launch the selected arcade mode
+
+### Engine Demos
+
+Each engine demo uses the normal controls for that game file. The Pygame and MonoGame demos are playable locally, while the Defold script is meant to be attached inside the Defold editor.
+
+## 🚀 Run It Locally
+
+### 🌐 Browser Arcade
+
+Open `index.html` directly, or serve the folder:
+
+```bash
+python -m http.server 8000
+```
+
+Then open:
+
+```text
+http://localhost:8000
+```
+
+### 🐍 Pygame
 
 ```bash
 pip install pygame-ce
 python demos/pygame/asteroid_field.py
 ```
 
-### Love2D Demo - Lua
-
-`demos/love2d/main.lua`
-
-- Neon Breakout with ball physics, multi-row bricks, particle bursts, and level progression
-- **Language:** Lua
+### 🌙 Love2D
 
 ```bash
 love demos/love2d/
 ```
 
-### Defold Script - Lua
-
-`demos/defold/game.script`
-
-- Shooter game object with movement, firing, and message-passing score hooks
-- Attach to a game object in the Defold Editor
-- **Language:** Lua
-
-### MonoGame Demo - C#
-
-`demos/monogame/Game1.cs`
-
-- Space shooter with animated player, enemy waves, bullet collision, and score
-- Drawn programmatically, no asset files required
-- **Language:** C# / .NET
+### 💠 MonoGame
 
 ```bash
 dotnet new --install MonoGame.Templates.CSharp
 dotnet new mgdesktopgl -n PixelForgeDemo
-# Replace Game1.cs with demos/monogame/Game1.cs
+```
+
+Then replace the generated `Game1.cs` with `demos/monogame/Game1.cs` and run:
+
+```bash
 dotnet run
 ```
 
-### Desktop Launcher
-
-`launcher.py` is a Python/Tkinter launcher for the web arcade and engine demos.
+### 🧭 Desktop Launcher
 
 ```bash
 python launcher.py
 ```
 
-## Engine Game Demos
+## 📁 Project Structure
 
-| Engine | Language | Game Demo |
-|---|---|---|
-| Pygame | Python | Asteroid Field |
-| Love2D | Lua | Neon Breakout |
-| Defold | Lua | Shooter Script |
-| MonoGame | C# | Space Shooter |
+```text
+.
+├── index.html                 # GitHub Pages arcade shell
+├── styles.css                 # Neon PixelForge styling
+├── app.js                     # Browser arcade game logic
+├── launcher.py                # Python desktop launcher
+├── demos/
+│   ├── pygame/                # Python Pygame asteroid shooter
+│   ├── love2d/                # Lua Love2D breakout game
+│   ├── defold/                # Lua Defold shooter script
+│   └── monogame/              # C# MonoGame space shooter
+├── README.md
+└── LICENSE
+```
 
-## See Also
+## 🔗 Related
 
-[The Engine Lab](https://github.com/DaCameraGirl/game-engine-lab) - Part I: Godot, Panda3D, Solar2D, Stride
+🎮 [The Engine Lab](https://github.com/DaCameraGirl/game-engine-lab) — Part I: Godot, Panda3D, Solar2D, and Stride.
 
-Built by Angela Hudson - 2026
+---
+
+**Built by Angela Hudson — 2026** ✨
