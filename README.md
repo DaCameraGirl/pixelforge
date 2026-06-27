@@ -1,3 +1,39 @@
+<p align="center">
+  <img src="docs/readme-banner.svg" alt="Pixel Forge — Pixel art and sprite tooling in the browser — forge assets without leaving the tab." width="720" />
+</p>
+
+<p align="center">
+  <strong>Pixel art and sprite tooling in the browser — forge assets without leaving the tab.</strong>
+</p>
+
+<p align="center">
+  <a href="https://dacameragirl.github.io/pixelforge/"><img src="https://img.shields.io/badge/Live-GitHub%20Pages-33d69f?style=for-the-badge&logo=github&logoColor=white" alt="Live demo" /></a>
+  <a href="https://github.com/DaCameraGirl/pixelforge"><img src="https://img.shields.io/badge/Code-GitHub-58a6ff?style=for-the-badge&logo=github&logoColor=white" alt="Source code" /></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/deploy-GitHub Pages-000000?style=flat-square&logo=github&logoColor=white" alt="deploy-GitHub Pages" />
+  <img src="https://img.shields.io/badge/creative-tools-ffb800?style=flat-square" alt="creative-tools" />
+</p>
+
+### Languages
+
+<p align="center">
+  <img src="https://img.shields.io/badge/JavaScript-76%25-F7DF1E?style=flat-square&logo=javascript&logoColor=111" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/CSS-10%25-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS" />
+  <img src="https://img.shields.io/badge/HTML-9%25-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML" />
+</p>
+
+### Stack
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Canvas-editor-ffb800?style=flat-square" alt="Canvas-editor" />
+  <img src="https://img.shields.io/badge/GitHub Pages-live-33d69f?style=flat-square&logo=github&logoColor=white" alt="GitHub Pages-live" />
+</p>
+
+<p align="center">
+  Built by <strong>Angela Hudson</strong> · <a href="https://github.com/DaCameraGirl">DaCameraGirl</a>
+</p>
 # 🎮✨ PixelForge
 
 **PixelForge** is a colorful multi-engine game lab with **five playable browser arcade games** plus **four companion engine demos** built with **Pygame, Love2D, Defold, and MonoGame**.
@@ -11,7 +47,9 @@
 ![Lua](https://img.shields.io/badge/Lua-Love2D%20%2B%20Defold-2c2d72?style=for-the-badge)
 ![CSharp](https://img.shields.io/badge/C%23-MonoGame-9b7cff?style=for-the-badge)
 
-## 🕹️ What You Can Play
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%95%B9%EF%B8%8F%20What%20You%20Can%20Play&fontSize=22&fontColor=e6edf3" width="720" alt="🕹️ What You Can Play" /></p>
+
 
 ### 🌈 Browser Arcade Cabinet
 
@@ -36,7 +74,9 @@ These demos show the same arcade/game-loop ideas across different engines and la
 | 🧩 **Defold** | **Lua** | **Shooter Script** | `demos/defold/game.script` |
 | 💠 **MonoGame** | **C# / .NET** | **Space Shooter** | `demos/monogame/Game1.cs` |
 
-## 🧪 Languages Used
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%A7%AA%20Languages%20Used&fontSize=22&fontColor=e6edf3" width="720" alt="🧪 Languages Used" /></p>
+
 
 | Language | Where | What It Does |
 | --- | --- | --- |
@@ -48,7 +88,9 @@ These demos show the same arcade/game-loop ideas across different engines and la
 | 💠 **C#** | `demos/monogame/` | MonoGame space shooter loop and procedural drawing |
 | 📝 **Markdown** | `README.md` | Project documentation |
 
-## 🎛️ Controls
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%8E%9B%EF%B8%8F%20Controls&fontSize=22&fontColor=e6edf3" width="720" alt="🎛️ Controls" /></p>
+
 
 ### Browser Arcade
 
@@ -62,7 +104,9 @@ These demos show the same arcade/game-loop ideas across different engines and la
 
 Each engine demo uses the normal controls for that game file. The Pygame and MonoGame demos are playable locally, while the Defold script is meant to be attached inside the Defold editor.
 
-## 🚀 Run It Locally
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%9A%80%20Run%20It%20Locally&fontSize=22&fontColor=e6edf3" width="720" alt="🚀 Run It Locally" /></p>
+
 
 ### 🌐 Browser Arcade
 
@@ -110,7 +154,9 @@ dotnet run
 python launcher.py
 ```
 
-## 📁 Project Structure
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%93%81%20Project%20Structure&fontSize=22&fontColor=e6edf3" width="720" alt="📁 Project Structure" /></p>
+
 
 ```text
 .
@@ -127,7 +173,9 @@ python launcher.py
 └── LICENSE
 ```
 
-## 🔗 Related
+<p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%94%97%20Related&fontSize=22&fontColor=e6edf3" width="720" alt="🔗 Related" /></p>
+
 
 🎮 [The Engine Lab](https://github.com/DaCameraGirl/game-engine-lab) — Part I: Godot, Panda3D, Solar2D, and Stride.
 
