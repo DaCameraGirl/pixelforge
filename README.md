@@ -48,7 +48,7 @@
 ![CSharp](https://img.shields.io/badge/C%23-MonoGame-9b7cff?style=for-the-badge)
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%95%B9%EF%B8%8F%20What%20You%20Can%20Play&fontSize=22&fontColor=e6edf3" width="720" alt="🕹️ What You Can Play" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=%F0%9F%95%B9%EF%B8%8F%20What%20You%20Can%20Play&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="🕹️ What You Can Play" /></p>
 
 
 ### 🌈 Browser Arcade Cabinet
@@ -75,7 +75,7 @@ These demos show the same arcade/game-loop ideas across different engines and la
 | 💠 **MonoGame** | **C# / .NET** | **Space Shooter** | `demos/monogame/Game1.cs` |
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%A7%AA%20Languages%20Used&fontSize=22&fontColor=e6edf3" width="720" alt="🧪 Languages Used" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=%F0%9F%A7%AA%20Languages%20Used&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="🧪 Languages Used" /></p>
 
 
 | Language | Where | What It Does |
@@ -89,7 +89,7 @@ These demos show the same arcade/game-loop ideas across different engines and la
 | 📝 **Markdown** | `README.md` | Project documentation |
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%8E%9B%EF%B8%8F%20Controls&fontSize=22&fontColor=e6edf3" width="720" alt="🎛️ Controls" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=%F0%9F%8E%9B%EF%B8%8F%20Controls&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="🎛️ Controls" /></p>
 
 
 ### Browser Arcade
@@ -105,7 +105,7 @@ These demos show the same arcade/game-loop ideas across different engines and la
 Each engine demo uses the normal controls for that game file. The Pygame and MonoGame demos are playable locally, while the Defold script is meant to be attached inside the Defold editor.
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%9A%80%20Run%20It%20Locally&fontSize=22&fontColor=e6edf3" width="720" alt="🚀 Run It Locally" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=%F0%9F%9A%80%20Run%20It%20Locally&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="🚀 Run It Locally" /></p>
 
 
 ### 🌐 Browser Arcade
@@ -155,7 +155,7 @@ python launcher.py
 ```
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%93%81%20Project%20Structure&fontSize=22&fontColor=e6edf3" width="720" alt="📁 Project Structure" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=%F0%9F%93%81%20Project%20Structure&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="📁 Project Structure" /></p>
 
 
 ```text
@@ -174,7 +174,7 @@ python launcher.py
 ```
 
 <p align="center"><img src="docs/readme-divider.svg" width="720" alt="" /></p>
-<p align="center"><img src="https://capsule-render.vercel.app/api?type=rect&color=070b14&height=50&section=header&text=%F0%9F%94%97%20Related&fontSize=22&fontColor=e6edf3" width="720" alt="🔗 Related" /></p>
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:070b14,100:12102a&height=50&section=header&text=%F0%9F%94%97%20Related&fontSize=22&fontColor=e6edf3&animation=twinkling" width="720" alt="🔗 Related" /></p>
 
 
 🎮 [The Engine Lab](https://github.com/DaCameraGirl/game-engine-lab) — Part I: Godot, Panda3D, Solar2D, and Stride.
